@@ -29,9 +29,9 @@ CUDA >= 9.0
 ## 動作の確認
 LASディレクトリで次を実行してください。
 
-    ```
-    ./toy_scripts/toy.test.bat
-    ```
+```
+./toy_scripts/toy.test.bat
+```
 
 toyデータによる動作確認ができます。音声は，男性が'yes'か'no'を8回発言するものが60個あります。  
 （'data/toy/waves'にあります。ファイル名が内容を表しており，'0'が'no'，'1'が'yes'です。）    
