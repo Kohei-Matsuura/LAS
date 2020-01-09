@@ -37,25 +37,52 @@ CUDA >= 9.0
 1. 音声（wav形式）を全て音響特徴量に変換します。
 - [HTKツールキット](http://htk.eng.cam.ac.uk/)のHCopyコマンドを用います。  
 コマンドには「どのように変換するか」の設定ファイルが必要ですが，私は次のように設定しています。  
-```config
-# coding parameters
-SOURCEFORMAT = WAV
-TARGETKIND = FBANK_D_A
-#DELTAWINDOW = 2
-#ACCWINDOW = 2
-TARGETRATE = 100000.0
-SAVECOMPRESSED = F
-SAVEWITHCRC = F
-WINDOWSIZE = 250000.0
-USEHAMMING = T
-PREEMCOEF = 0.97
-NUMCHANS = 40
-ENORMALISE = F
-```
+    ```config
+    # coding parameters
+    SOURCEFORMAT = WAV
+    TARGETKIND = FBANK_D_A
+    #DELTAWINDOW = 2
+    #ACCWINDOW = 2
+    TARGETRATE = 100000.0
+    SAVECOMPRESSED = F
+    SAVEWITHCRC = F
+    WINDOWSIZE = 250000.0
+    USEHAMMING = T
+    PREEMCOEF = 0.97
+    NUMCHANS = 40
+    ENORMALISE = F
+    ```  
+- 変換したデータの拡張子は何でも良いですが，こだわりが無ければ.htkとしてください。  
+  
+2. テキストと対応付けたファイルを作成してください。  
+- \<sos>，\<eos>はそれぞれ文の始まりと終わりを表す特殊記号です  
+- スペースは全て半角で。
+    ```sample.list
+    XXX.htk <sos> 今日 は 良く 寝 た のに <eos>
+    XXX.htk <sos> 全く 疲れ が 取れ ない な <eos>
+    ```
 
-- 変換したデータの拡張子は.htkとしてください。
+3. テキストをIDに変換してください。
+- 次のような感じです。便宜上これを「スクリプト」と呼びます。  
+XXX.htkは音響特徴量が保存されているディレクトリです。
+    ```sample.script
+    XXX.htk 0 1203 7134 405 493 221 193 1
+    XXX.htk 0 5508 3302 1205 985 8746 56 1
+    ```
+- このとき，次のような対応リストもできると思います。  
+デコード時に必要なので保持しておいてください。
+    ```sample.id
+    <sos> 0
+    <eos> 1
+    …
+    今日 1203
+    …
+    ```
 
-2. 
-
+4. スクリプトを次のようにモデルに与えてしばらく待ちます。  
+学習はいつか終わります。日本語ならだいたい数十時間のオーダーです。
+    ```train.bat
+    NOT YET
+    ```
 
 ### テキストの推定
