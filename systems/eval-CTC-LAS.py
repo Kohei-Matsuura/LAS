@@ -31,7 +31,7 @@ hd['BATCH_SIZE'] = 1
 hd['SPEC_AUG'] = False
 hd['CLASS_SIZE'] = CTC_CLASS_SIZE
 hd['CLASS_SIZE_ATTN'] = ATTN_CLASS_SIZE
-DEVICE = torch.device('cuda' if torch.cuda.is_available else 'cpu')
+DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 hd['DEVICE'] = DEVICE
 # In decode state, BATCH SIZE must be 1
 

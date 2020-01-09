@@ -38,8 +38,11 @@ tools.print_dict(hd)
 
 hd['CLASS_SIZE'] = CTC_CLASS_SIZE
 hd['CLASS_SIZE_ATTN'] = ATTN_CLASS_SIZE
-DEVICE = torch.device('cuda' if torch.cuda.is_available else 'cpu')
+DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 hd['DEVICE'] = DEVICE
+print('Using {} ...'.format(DEVICE))
+
+SAVE_PERIOD = 10
 
 # Seeding
 random.seed(hd['SEED'])
@@ -90,7 +93,7 @@ for e in range(0, hd['EPOCH_NUM']):
 #for e in range(1):
     num_iter = FILE_LINE_NUM // hd['BATCH_SIZE']
     if e == 30 or e == 35:
-        hd['LEARNING_RATE'] = hd['LEARNING_RATE'] * 0.1
+        #hd['LEARNING_RATE'] = hd['LEARNING_RATE'] * 0.1
         optimizer = torch.optim.Adam(my_model.parameters(),
                                      lr=hd['LEARNING_RATE'],
                                      weight_decay=hd['WEIGHT_DECAY'])
@@ -132,9 +135,9 @@ for e in range(0, hd['EPOCH_NUM']):
             #del prev_optimizer
             prev_optimizer = copy.deepcopy(optimizer)
             print('iter: ' + str(e + 1) + '-' + str(i + 1))
-            print('loss_attn: ' + str(loss_attn.item()))
-            print('loss_ctc: ' + str(loss_ctc.item()))
-            print('loss: ' + str(loss.item()))
+            print('loss_attn: ' + str(round(loss_attn.item(), 3)))
+            print('loss_ctc: ' + str(round(loss_ctc.item(), 3)))
+            print('loss: ' + str(round(loss.item(), 3)))
             now = int(round(time.time()))
             print(str(now - start) + ' seconds have passed.')
             print()
@@ -156,6 +159,6 @@ for e in range(0, hd['EPOCH_NUM']):
 
         loss.detach()
         torch.cuda.empty_cache()
-
-    torch.save(my_model.state_dict(), SAVE_DIR + '/params/epoch' + str(e + 1) + '.net')
-    torch.save(optimizer.state_dict(), SAVE_DIR + '/params/epoch' + str(e + 1) + '.opt')
+    if (e + 1) % SAVE_PERIOD == 0:
+        torch.save(my_model.state_dict(), SAVE_DIR + '/params/epoch' + str(e + 1) + '.net')
+        torch.save(optimizer.state_dict(), SAVE_DIR + '/params/epoch' + str(e + 1) + '.opt')

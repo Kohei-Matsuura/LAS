@@ -16,7 +16,7 @@ hd['align2'] = '{:-^25}'.format('Setting')
 
 #hd['CTC_INPUT_FEATURE_SIZE'] = 120
 
-hd['EPOCH_NUM'] = 20
+hd['EPOCH_NUM'] = 200
 hd['BATCH_SIZE'] = 3
 
 # Rarely changed
