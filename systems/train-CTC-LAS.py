@@ -132,9 +132,9 @@ for e in range(0, hd['EPOCH_NUM']):
             #del prev_optimizer
             prev_optimizer = copy.deepcopy(optimizer)
             print('iter: ' + str(e + 1) + '-' + str(i + 1))
-            print('loss_attn: ' + str(round(loss_attn.item(), 3)))
-            print('loss_ctc: ' + str(round(loss_ctc.item(), 3)))
-            print('loss: ' + str(round(loss.item(), 3)))
+            print('loss_attn: ' + str(loss_attn.item()))
+            print('loss_ctc: ' + str(loss_ctc.item()))
+            print('loss: ' + str(loss.item()))
             now = int(round(time.time()))
             print(str(now - start) + ' seconds have passed.')
             print()
