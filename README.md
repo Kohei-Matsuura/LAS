@@ -1,32 +1,61 @@
 # LAS
-To share my end-to-end ASR system
+
+## はじめに
+このリポジトリは，研究で使用している音声認識システムを限定して共有するためのものです。  
+一般公開は想定されていません。
 
 
-## Description
+## 音声認識モデルについて
+このモデルは[S. Ueno et al. ICASSP, 2018](http://www.sap.ist.i.kyoto-u.ac.jp/lab/bib/intl/UEN-ICASSP18.pdf)に基づいて再実装されたものです。  
 
-This ASR model is based on [S. Ueno et al. ICASSP, 2018].(http://www.sap.ist.i.kyoto-u.ac.jp/lab/bib/intl/UEN-ICASSP18.pdf)
-From log-mel scale filter banks, it can infer what is said.
+## できること
+音響特徴量（対数メル尺度フィルタバンクを採用しています。具体的には後述）からテキスト列を推定します。  
+綺麗にアノテーションされた300時間のデータがあれば，だいたい90%くらい正解します。
 
-
-## Requirement
-
-Python >= 3.6.0
+## 必要なもの
+Python >= 3.6.0  
 PyTorch >= 1.0
 
-CUDA >= 9.0 is recommended.
+GPUを使用するにあたって，以下が必要です。  
+CUDA >= 9.0
+
+## 動作環境
+本モデルは Ubuntu 16.04 下で開発されました。  
+その他の環境でどうなるかは試したことが無いので不明です…
+
+## 使い方
+### モデルの学習
+モデルを１から学習したい場合，次のステップに従ってください。
+
+0. 仮定
+- 細切れの音声と，それに対応するラベルが存在すると仮定します。  
+この時，音声長はバラバラで大丈夫ですが，最大でも15秒までお勧めします。
+
+- もし音声が一つの大きなファイルの場合，これを無音区間で適当に区切る必要があります。  
+大抵の場合，この分割の通りにテキストを分割するのが最もお金のかかる箇所です。
+
+1. 音声（wav形式）を全て音響特徴量に変換します。
+- [HTKツールキット](http://htk.eng.cam.ac.uk/)のHCopyコマンドを用います。  
+コマンドには「どのように変換するか」の設定ファイルが必要ですが，私は次のように設定しています。  
+```config
+# coding parameters
+SOURCEFORMAT = WAV
+TARGETKIND = FBANK_D_A
+#DELTAWINDOW = 2
+#ACCWINDOW = 2
+TARGETRATE = 100000.0
+SAVECOMPRESSED = F
+SAVEWITHCRC = F
+WINDOWSIZE = 250000.0
+USEHAMMING = T
+PREEMCOEF = 0.97
+NUMCHANS = 40
+ENORMALISE = F
+```
+
+- 変換したデータの拡張子は.htkとしてください。
+
+2. 
 
 
-## Environment
-
-This was developed on Ubuntu 16.04.
-I do not know what will happen in other environments.
-
-
-## Usage
-### Training
-Follow below steps to train the model from scratch.
-
-1. Prease convert wav data into acoustic features.
-
-
-### Decoding
+### テキストの推定
