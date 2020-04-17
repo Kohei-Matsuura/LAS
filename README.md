@@ -58,8 +58,6 @@ GPUを使用する場合，30分程度待つとテストの結果が出てきま
     # coding parameters
     SOURCEFORMAT = WAV
     TARGETKIND = FBANK_D_A
-    #DELTAWINDOW = 2
-    #ACCWINDOW = 2
     TARGETRATE = 100000.0
     SAVECOMPRESSED = F
     SAVEWITHCRC = F
