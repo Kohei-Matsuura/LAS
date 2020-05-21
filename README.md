@@ -6,7 +6,7 @@
 
 
 ## 音声認識モデルについて
-このモデルは[S. Ueno et al. ICASSP, 2018](http://www.sap.ist.i.kyoto-u.ac.jp/lab/bib/intl/UEN-ICASSP18.pdf)に基づいて再実装されたものです。  
+このモデルは[S. Ueno et al. ICASSP, 2018](http://www.sap.ist.i.kyoto-u.ac.jp/lab/bib/intl/UEN-ICASSP18.pdf)に基づいて実装されたものです。  
 <!--
 ## ライセンスのようなもの
 このリポジトリにアクセスできる人は基本的に自由に使ってもらって構いません。  
